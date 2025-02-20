@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  frontend_api:
+    build: ./frontend_api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - rabbitmq
+    environment:
+      - DATABASE_URL=sqlite:///./frontend.db
+
+  admin_api:
+    build: ./admin_api
+    ports:
+      - "8001:8000"
+    depends_on:
+      - rabbitmq
+    environment:
+      - DATABASE_URL=sqlite:///./admin.db
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
